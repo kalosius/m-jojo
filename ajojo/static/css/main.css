@@ -33,7 +33,7 @@ form {
     border-bottom: 1px solid whitesmoke;
 }
 
-.navbar li a {
+.navbar li a, .navbar li form button {
     font-size: 20px;
     color: rgb(39, 82, 82) !important;
 }
