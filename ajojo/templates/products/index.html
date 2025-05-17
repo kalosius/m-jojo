@@ -7,11 +7,7 @@
 <br>
 <div style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" class="container">
   <form action="" method="GET" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-    {% for field in product_filter.form %}
-      <div>
-        {{ field }}
-      </div>
-    {% endfor %}
+    {{ product_filter.form.search }}
     <input 
       style="border-radius: 25px; color: rgb(161, 161, 219); height: 38px;"
       type="submit"
@@ -20,6 +16,8 @@
     />
   </form>
 </div>
+
+
 
 
   <br>

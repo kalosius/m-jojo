@@ -14,12 +14,14 @@ from django.urls import reverse
 
 
 # Create your views here.
-
 def home(request):
     products = Product.objects.all().order_by('-id')
     product_filter = Product_filter(request.GET, queryset=products)
     products = product_filter.qs
-    return render(request,'products/index.html', {'products':products,'product_filter':product_filter})
+    return render(request, 'products/index.html', {
+        'products': products,
+        'product_filter': product_filter
+    })
 
 @login_required
 def index(request):

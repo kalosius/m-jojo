@@ -1,17 +1,16 @@
 import django_filters
-from .models import Category,Product
-
- # Creating a class to filter objects from our models
-
+from django.db.models import Q
+from .models import Product
 
 class Product_filter(django_filters.FilterSet):
-    # class meta is used to alter(manipulate)the content of other classes
-    name = django_filters.CharFilter(field_name='item_name', lookup_expr='icontains')  # case-insensitive contains
+    search = django_filters.CharFilter(method='filter_by_all', label='Search')
+
     class Meta:
         model = Product
-        fields = ['name']
+        fields = []
 
-# class Category_filter(django_filters.FilterSet):
-#     class Meta:
-#         model = Category
-#         fields = ['name']
+    def filter_by_all(self, queryset, name, value):
+        return queryset.filter(
+            Q(item_name__icontains=value) |
+            Q(category_name__name__icontains=value)
+        ).distinct()
