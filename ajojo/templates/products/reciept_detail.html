@@ -1,44 +1,64 @@
 {% extends 'products/base.html'%}
-{% block content%}
+{% block content %}
 <br />
 
 <div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          <h1 class="text-center">ORDER SUMMARY</h1><br>
-          <h2 class="lead">Customer Name: {{receipt.issued_to | title}}</h2>
-        </div>
-        <div class="card-block">
-          <div class="table-responsive">
-            <table class="table table-sm">
-              <thead>
-                <tr>
-                  <td><strong>Item Name</strong></td>
-                  <td class="text-xs-center"><strong>Item Quantity</strong></td>
-                  <td class="text-xs-right"><strong>Total Bill(Ugx)</strong></td>
-                  <td class="text-xs-right"><strong>Amount Paid(Ugx)</strong></td>
-                  <td class="text-xs-right">
-                    <strong>Total change(UgX)</strong>
-                  </td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{{receipt.item| title}}</td>
-                  <td class="text-xs-center">{{receipt.quantity }}</td>
-                  <td class="text-xs-center">Ug{{receipt.get_total | title}}</td>
-                  <td class="text-xs-right">Ugx{{ receipt.amount_received }}</td>
-                  <td class="text-xs-right">Ugx{{ receipt.get_change }}</td>
-                </tr>
-              </tbody>
-            </table>
+  <!-- 🔘 Print Button -->
+  <div class="text-end mb-3">
+    <button class="btn btn-primary" onclick="printReceipt()">🖨️ Print Summary</button>
+  </div>
+
+  <!-- 🧾 Printable Section -->
+  <div id="print-area">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h1 class="text-center">ORDER SUMMARY</h1><br>
+            <h2 class="lead">Customer Name: {{ receipt.issued_to|title }}</h2>
+          </div>
+          <div class="card-block">
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <td><strong>Item Name</strong></td>
+                    <td class="text-xs-center"><strong>Item Quantity</strong></td>
+                    <td class="text-xs-right"><strong>Total Bill (UGX)</strong></td>
+                    <td class="text-xs-right"><strong>Amount Paid (UGX)</strong></td>
+                    <td class="text-xs-right"><strong>Total Change (UGX)</strong></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ receipt.item|title }}</td>
+                    <td class="text-xs-center">{{ receipt.quantity }}</td>
+                    <td class="text-xs-center">UGX {{ receipt.get_total }}</td>
+                    <td class="text-xs-right">UGX {{ receipt.amount_received }}</td>
+                    <td class="text-xs-right">UGX {{ receipt.get_change }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
 </div>
+
+<!-- 🖨️ Print Script -->
+<script>
+  function printReceipt() {
+    const printContents = document.getElementById('print-area').innerHTML;
+    const originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+    window.location.reload();
+  }
+</script>
 
 {% endblock %}

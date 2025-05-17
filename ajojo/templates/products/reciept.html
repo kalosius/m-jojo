@@ -1,30 +1,51 @@
-{% extends 'products/base.html'%} {% block content%}
+{% extends 'products/base.html'%}
+
+{% block content %}
 <br /><br>
 <div class="container">
   <h1 class="card-header text-center">ALL RECEIPTS</h1><br>
-  {% for sale in sales %}
-  <div class="card">
-    <div class="card-body">
-      <h3 class="card-title">Customer : {{sale.issued_to | title}}</h3>
-      <h6 class="card-text">Item : {{sale.item}}</h6>
-      <h6 class="card-text">Amount Paid:  UGX{{ sale.amount_received }}</h6>
-      <h6 class="card-text">Quantity: {{sale.quantity }}</h6>
-      <h2>Total Price :  UGX{{ sale.get_total }}</h2>
-      <div style="flex: 1">
-        <h6 class="card-text">Change Collected:  UGX{{ sale.get_change }}</h6>
-        <a  href="{% url 'reciept_detail' sale.id %}">
-          <input
-            type="submit"
-            value="Final Receipt"
-            class="btn btn-danger"
-            type="button"
-            style="color: rgb(43, 105, 105);"
-          />
-        </a>
-      </div>
-    </div>
+
+  <!-- 🔘 Print Button -->
+  <div class="text-end mb-3">
+    <button class="btn btn-primary" onclick="printReceipts()">🖨️ Print Receipts</button>
   </div>
-  <br />
-  {% endfor %}
+
+  <!-- 🧾 Receipts Section -->
+  <div id="receipt-section">
+    {% for sale in sales %}
+      <div class="card mb-4">
+        <div class="card-body">
+          <h3 class="card-title">Customer: {{ sale.issued_to|title }}</h3>
+          <h6 class="card-text">Item: {{ sale.item }}</h6>
+          <h6 class="card-text">Amount Paid: UGX {{ sale.amount_received }}</h6>
+          <h6 class="card-text">Quantity: {{ sale.quantity }}</h6>
+          <h2>Total Price: UGX {{ sale.get_total }}</h2>
+          <h6 class="card-text">Change Collected: UGX {{ sale.get_change }}</h6>
+          <a href="{% url 'reciept_detail' sale.id %}">
+            <input
+              type="submit"
+              value="Final Receipt"
+              class="btn btn-danger"
+              style="color: rgb(43, 105, 105);"
+            />
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
+
+<!-- 🖨️ Print Script -->
+<script>
+  function printReceipts() {
+    const printContents = document.getElementById('receipt-section').innerHTML;
+    const originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+    window.location.reload(); // reload to restore any JavaScript functionality
+  }
+</script>
+
 {% endblock %}
