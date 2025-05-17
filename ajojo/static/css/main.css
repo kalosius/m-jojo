@@ -1,7 +1,7 @@
 html,body {
     position: relative;
     overflow-x: hidden;
-    /* background:  url('../images/newimg.png'); */
+    background:  url('../images/back2.jpg');
     width: 100% !important;
     height: 100vh;
     display: table;
@@ -29,8 +29,8 @@ form {
 
 .navbar {
     /* background-color: #30a6f5; */
-    background-color: hsl(182, 100%, 95%);
-    
+    /* background-color: hsl(182, 100%, 95%); */
+    border-bottom: 1px solid whitesmoke;
 }
 
 .navbar li a {
@@ -41,6 +41,14 @@ form {
 .navbar-brand {
     font-size: 30px !important;
     color: rgb(39, 82, 82) !important;
+    
+}
+
+.logoutbtn{
+    border: none;
+    background-color: transparent;
+    margin-top: 6px;
+    font-size: 20px;
     
 }
 

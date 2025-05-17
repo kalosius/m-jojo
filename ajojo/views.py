@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Product, Sale
-#now we are including our filters from the filters file
+# including  filters from the filters file
 from .filters import Product_filter
 
-# including our model forms created in the forms file
+# including model forms created in the forms file
 from .forms import AddForm, SaleForm
 
 #Handling redirection after deletion
@@ -26,7 +26,7 @@ def index(request):
 
 
 
-# Create a view for product_detail
+# View for product_detail
 # @login_required is a decorator, it comes before a function
 
 @login_required
@@ -113,3 +113,5 @@ def delete_item(request, product_id):
 @login_required
 def services(request):
     return render(request, 'products/services.html')
+
+
