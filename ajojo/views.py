@@ -111,6 +111,8 @@ def delete_item(request, product_id):
     delete.delete()
     return HttpResponseRedirect(reverse('index'))
 
+
+# Dashboard view
 @login_required
 def dashboard(request):
     # 1. Key aggregates
