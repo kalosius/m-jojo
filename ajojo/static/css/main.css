@@ -1,0 +1,55 @@
+html,body {
+    position: relative;
+    overflow-x: hidden;
+    /* background:  url('../images/newimg.png'); */
+    width: 100% !important;
+    height: 100vh;
+    display: table;
+    position: relative;
+    background-position: center;
+    background-attachment: scroll;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+}
+  
+body{
+      background-color: hsl(182, 100%, 95%);
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+ }
+    
+
+form {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.navbar {
+    /* background-color: #30a6f5; */
+    background-color: hsl(182, 100%, 95%);
+    
+}
+
+.navbar li a {
+    font-size: 20px;
+    color: rgb(39, 82, 82) !important;
+}
+
+.navbar-brand {
+    font-size: 30px !important;
+    color: rgb(39, 82, 82) !important;
+    
+}
+
+@media(max-width: 767px){
+    form { 
+        width: 90%;
+    }
+}
+
+#navdown{
+    color: black !important;
+}
