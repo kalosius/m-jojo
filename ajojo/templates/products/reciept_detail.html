@@ -15,7 +15,7 @@
         <div class="card">
           <div class="card-header">
             <h1 class="text-center">ORDER SUMMARY</h1><br>
-            <h2 class="lead">Customer Name: {{ receipt.issued_to|title }}</h2>
+            <h2 class="lead">Customer Name: {{ reciept.issued_to|title }}</h2>
           </div>
           <div class="card-block">
             <div class="table-responsive">
@@ -31,11 +31,11 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{{ receipt.item|title }}</td>
-                    <td class="text-xs-center">{{ receipt.quantity }}</td>
-                    <td class="text-xs-center">UGX {{ receipt.get_total }}</td>
-                    <td class="text-xs-right">UGX {{ receipt.amount_received }}</td>
-                    <td class="text-xs-right">UGX {{ receipt.get_change }}</td>
+                    <td>{{ reciept.item|title }}</td>
+                    <td class="text-xs-center">{{ reciept.quantity }}</td>
+                    <td class="text-xs-center">UGX {{ reciept.get_total }}</td>
+                    <td class="text-xs-right">UGX {{ reciept.amount_received }}</td>
+                    <td class="text-xs-right">UGX {{ reciept.get_change }}</td>
                   </tr>
                 </tbody>
               </table>

@@ -100,13 +100,13 @@ def add_to_stock(request, pk):
 
 @login_required
 def reciept_detail(request, reciept_id):
-    reciept = Sale.objects.get(id = reciept_id)
+    reciept = Sale.objects.get(id=reciept_id)
     return render(request,'products/reciept_detail.html', {'reciept':reciept})
 
 
 @login_required
 def delete_item(request, product_id):
-    delete = Product.objects.get(id = product_id)
+    delete = Product.objects.get(id=product_id)
     delete.delete()
     return HttpResponseRedirect(reverse('index'))
 
