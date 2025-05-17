@@ -1,21 +1,26 @@
 {% extends 'products/base.html'%} {% block content%}
-<br></br>
+<br>
 
 <div class = "container">
   <h1 style="font-weight: bolder; font-family: 'Franklin Gothic Medium',
    'Arial Narrow', Arial, sans-serif;" class= "text-center">ITEMS IN STOCK</h1>
-  <br>
+<br>
+<div style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" class="container">
+  <form action="" method="GET" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+    {% for field in product_filter.form %}
+      <div>
+        {{ field }}
+      </div>
+    {% endfor %}
+    <input 
+      style="border-radius: 25px; color: rgb(161, 161, 219); height: 38px;"
+      type="submit"
+      value="Search Products"
+      class="btn btn-secondary btn"
+    />
+  </form>
+</div>
 
-  <div style="font-family: 'Franklin Gothic Medium', 'Arial Narrow',
-   Arial, sans-serif;" class = "container">
-    <form action = "" method = "GET">
-      {{product_filter.form }} 
-      <input style="border-radius: 25px; color: rgb(161, 161, 219);"
-      type = "submit"
-      value = "Search Products"
-      class="btn btn-secondary btn"/>
-    </form>
-  </div>
 
   <br>
   <table  style="font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow',
