@@ -1,0 +1,117 @@
+{% extends 'products/base.html' %}
+{% block content %}
+<div class="container my-5">
+  <h1 class="mb-4 text-center">📊 Admin Dashboard</h1>
+
+  <!-- 1. Cards Row -->
+  <div class="row mb-5">
+    <div class="col-md-3 mb-3">
+      <div class="card text-white bg-primary">
+        <div class="card-body text-center">
+          <h2>{{ total_categories }}</h2>
+          <p class="mb-0">Categories</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card text-white bg-success">
+        <div class="card-body text-center">
+          <h2>{{ total_products }}</h2>
+          <p class="mb-0">Products</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card text-white bg-warning">
+        <div class="card-body text-center">
+          <h2>{{ total_stock }}</h2>
+          <p class="mb-0">Stock Remaining</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <div class="card text-white bg-info">
+        <div class="card-body text-center">
+          <h2>{{ total_sales_amt }}</h2>
+          <p class="mb-0">Total Sales (UGX)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Top 5 Best‑Selling Products -->
+  <div class="card mb-5">
+    <div class="card-header">
+      <h4>🏆 Top 5 Best‑Selling Products</h4>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th class="text-end">Quantity Sold</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in top_products %}
+            <tr>
+              <td>{{ p.item__item_name }}</td>
+              <td class="text-end">{{ p.total_sold }}</td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="2" class="text-center">No sales yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 3. Sales by Category Chart -->
+  <div class="card">
+    <div class="card-header">
+      <h4>📈 Sales by Category</h4>
+    </div>
+    <div class="card-body">
+      <canvas id="salesByCatChart" height="100"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ Embed JSON data safely -->
+<script id="chart-data" type="application/json">
+{
+  "labels": [{% for c in sales_by_cat %}"{{ c.item__category_name__name }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
+  "data": [{% for c in sales_by_cat %}{{ c.total }}{% if not forloop.last %}, {% endif %}{% endfor %}]
+}
+</script>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const chartData = JSON.parse(document.getElementById('chart-data').textContent);
+  const ctx = document.getElementById('salesByCatChart').getContext('2d');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: chartData.labels,
+      datasets: [{
+        label: 'UGX Sales',
+        data: chartData.data,
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+</script>
+{% endblock %}

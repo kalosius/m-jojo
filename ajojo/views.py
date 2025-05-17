@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Product, Sale
+from .models import Product, Sale, Category
 # including  filters from the filters file
 from .filters import Product_filter
+from django.db.models import Sum, F
 
 # including model forms created in the forms file
 from .forms import AddForm, SaleForm
@@ -111,7 +112,40 @@ def delete_item(request, product_id):
     return HttpResponseRedirect(reverse('index'))
 
 @login_required
-def services(request):
-    return render(request, 'products/services.html')
+def dashboard(request):
+    # 1. Key aggregates
+    total_categories = Category.objects.count()
+    total_products   = Product.objects.count()
+    total_stock      = Product.objects.aggregate(
+        remaining=Sum('total_quantity')
+    )['remaining'] or 0
+    total_sales_amt  = Sale.objects.aggregate(
+        amt=Sum(F('quantity') * F('unit_price'))
+    )['amt'] or 0
 
+    # 2. Top 5 best sellers
+    top_products = (
+        Sale.objects
+        .values('item__item_name')
+        .annotate(total_sold=Sum('quantity'))
+        .order_by('-total_sold')[:5]
+    )
+
+    # 3. Sales by category
+    sales_by_cat = (
+        Sale.objects
+        .values('item__category_name__name')
+        .annotate(total=Sum(F('quantity') * F('unit_price')))
+        .order_by('item__category_name__name')
+    )
+
+    context = {
+        'total_categories': total_categories,
+        'total_products': total_products,
+        'total_stock': total_stock,
+        'total_sales_amt': total_sales_amt,
+        'top_products': top_products,
+        'sales_by_cat': sales_by_cat,
+    }
+    return render(request, 'products/dashboard.html', context)
 

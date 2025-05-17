@@ -35,12 +35,12 @@
                 <a class="nav-link" href="{% url 'all_sales'%}">ALL SALES</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'services'%}">SERVICES</a>
+                <a class="nav-link" href="{% url 'dashboard'%}">DASHBOARD</a>
               </li>
               <li class="nav-item">
                 <form method="post" action="{% url 'logout' %}" style="display: inline;">
                   {% csrf_token %}
-                  <button class="logoutbtn" type="submit">Logout</button>
+                  <button class="logoutbtn" type="submit">LOGOUT</button>
                 </form>                
               </li>
             {% endif %}

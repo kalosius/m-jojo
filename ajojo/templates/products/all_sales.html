@@ -1,55 +1,76 @@
 {% extends 'products/base.html' %}
 {% block content %}
 
-<br></br>
+<br><br>
 
-<div class = "container">
-<h1 class = "text-center">TOTAL SALES MADE</h1><br>
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Total Amount Received</th>
-        <th scope="col">Total Change Given</th>
-        <th scope="col">Net Amount</th>
-      </tr>
-    </thead>  
-    <tbody>
-      <tr>    
-        <td>UGX{{total}}</td>
-        <td>UGX{{change}}</td>
-        <td>UGX{{net}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<br></br>
+<div class="container">
+  <!-- 🔘 Print Button -->
+  <div class="text-end mb-3">
+    <button class="btn btn-primary" onclick="printSales()">🖨️ Print Sales</button>
+  </div>
 
-<div class = "container">
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Customer name</th>
-        <th scope="col">Item Bought</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Unit Price(UGX)</th>
-        <th scope="col">Total Cost</th>
-        <th scope="col">Amount Paid</th>
-        <th scope="col">Change Collected</th>
-      </tr>
-    </thead>
-    {% for sale in sales %}
-    <tbody>
-      <tr>    
-        <td>{{sale.issued_to | title}}</td>
-        <td>{{sale.item | title}}</td>
-        <td>{{sale.quantity}}</td>
-        <td>UGX{{sale.unit_price}}</td>
-        <td>UGX{{sale.get_total}}</td>
-        <td>UGX{{sale.amount_received}}</td>
-        <td>UGX{{sale.get_change}}</td>
-      </tr>
-    </tbody>
-    {% endfor %}
-  </table>
+  <!-- 🧾 Printable Sales Summary -->
+  <div id="print-area">
+    <h1 class="text-center">TOTAL SALES MADE</h1><br>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Total Amount Received</th>
+          <th scope="col">Total Change Given</th>
+          <th scope="col">Net Amount</th>
+        </tr>
+      </thead>  
+      <tbody>
+        <tr>    
+          <td>UGX {{ total }}</td>
+          <td>UGX {{ change }}</td>
+          <td>UGX {{ net }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br><br>
+
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Customer Name</th>
+          <th scope="col">Item Bought</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Unit Price (UGX)</th>
+          <th scope="col">Total Cost</th>
+          <th scope="col">Amount Paid</th>
+          <th scope="col">Change Collected</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for sale in sales %}
+          <tr>    
+            <td>{{ sale.issued_to|title }}</td>
+            <td>{{ sale.item|title }}</td>
+            <td>{{ sale.quantity }}</td>
+            <td>UGX {{ sale.unit_price }}</td>
+            <td>UGX {{ sale.get_total }}</td>
+            <td>UGX {{ sale.amount_received }}</td>
+            <td>UGX {{ sale.get_change }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
+
+<!-- 🖨️ Print Script -->
+<script>
+  function printSales() {
+    const printContents = document.getElementById('print-area').innerHTML;
+    const originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+    window.location.reload();
+  }
+</script>
+
 {% endblock %}
